@@ -18,6 +18,12 @@ function AdminLayout() {
 
   if (pathname === "/admin/login") return <Outlet />;
 
+  // Try to claim first-admin role on every load (no-op once an admin exists).
+  // Allows the first signed-in user to gain admin access automatically.
+  if (typeof window !== "undefined") {
+    void supabase.rpc("claim_first_admin");
+  }
+
   async function logout() {
     await supabase.auth.signOut();
     nav({ to: "/admin/login" });
