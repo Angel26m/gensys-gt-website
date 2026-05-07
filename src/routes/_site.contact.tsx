@@ -58,6 +58,7 @@ function ContactPage() {
     setDone(true);
     toast.success("Quote request received — we'll be in touch shortly!");
     (e.target as HTMLFormElement).reset();
+    if (items.length > 0) clear();
   }
 
   return (
