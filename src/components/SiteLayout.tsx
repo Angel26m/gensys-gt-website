@@ -95,6 +95,11 @@ export function SiteLayout() {
       <footer className="bg-[#05121f] text-white/50 px-6 py-8 text-center text-xs">
         <div className="max-w-6xl mx-auto">
           <strong className="text-white/85">Genesys Global Technologies</strong> — IT Solutions, CCTV & Security Systems in Oman
+          <div className="flex gap-4 justify-center mt-3 flex-wrap text-white/60">
+            <a href="tel:+96879868055" className="hover:text-accent">+968 7986 8055</a>
+            <a href="mailto:info@genesysgt.com" className="hover:text-accent">info@genesysgt.com</a>
+            <a href="https://maps.app.goo.gl/5WghirKBuCj5xyJKA" target="_blank" rel="noopener noreferrer" className="hover:text-accent">Find us on Maps</a>
+          </div>
           <div className="flex gap-4 justify-center mt-3 flex-wrap">
             <Link to="/services" className="text-white/40 hover:text-accent">Services</Link>
             <Link to="/products" className="text-white/40 hover:text-accent">Products</Link>

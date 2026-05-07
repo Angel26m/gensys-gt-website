@@ -3,8 +3,8 @@ import { useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Mail, MessageCircle, Phone } from "lucide-react";
-import { COMPANY_EMAIL, COMPANY_PHONE, COMPANY_WHATSAPP, mailtoLink, whatsappLink } from "@/lib/contact";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { COMPANY_EMAIL, COMPANY_LOCATION_URL, COMPANY_PHONE, COMPANY_WHATSAPP, mailtoLink, whatsappLink } from "@/lib/contact";
 
 export const Route = createFileRoute("/_site/contact")({
   component: ContactPage,
@@ -92,6 +92,15 @@ function ContactPage() {
               <div className="text-xs text-white/60 mt-1">{COMPANY_PHONE}</div>
             </a>
           </div>
+
+          <a
+            href={COMPANY_LOCATION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-6 text-sm text-white/80 hover:text-accent transition-colors"
+          >
+            <MapPin size={16} className="text-accent" /> View our location on Google Maps
+          </a>
         </div>
       </section>
 
