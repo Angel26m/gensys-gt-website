@@ -29,6 +29,9 @@ const QuoteSchema = z.object({
 function ContactPage() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const { items, remove, clear } = useQuoteCart();
+  const cartList = items.map((i) => i.name).join(", ");
+  const cartMessage = formatQuoteMessage(items);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
