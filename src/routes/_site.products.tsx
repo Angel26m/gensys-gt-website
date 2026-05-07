@@ -121,7 +121,6 @@ function QuoteCartBar() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <Link
               to="/contact"
-              search={{ items: items.map((i) => i.name).join("|") } as never}
               className="bg-accent2 hover:bg-accent2/90 text-accent2-foreground text-sm font-medium px-3 py-2 rounded-md text-center inline-flex items-center justify-center gap-1.5"
             >
               <FileText size={14} /> Get Quote
