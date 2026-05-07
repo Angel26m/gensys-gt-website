@@ -39,51 +39,121 @@ function ProductsPage() {
   const filtered = activeCat === "All" ? products : products.filter((p) => p.category === activeCat);
 
   return (
-    <section className="px-6 py-16 md:py-20">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-[11px] tracking-[0.22em] uppercase text-accent font-medium mb-2">Products</div>
-        <h1 className="text-3xl md:text-5xl font-bold text-primary mb-3">This Week's Products</h1>
-        <p className="text-muted-foreground max-w-xl mb-8">
-          Our catalog is refreshed every week. Browse what's currently in stock and request a quote or buy directly.
-        </p>
+    <>
+      <section className="px-6 py-16 md:py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-[11px] tracking-[0.22em] uppercase text-accent font-medium mb-2">Products</div>
+          <h1 className="text-3xl md:text-5xl font-bold text-primary mb-3">This Week's Products</h1>
+          <p className="text-muted-foreground max-w-xl mb-8">
+            Add products of interest to your quote list and we'll send a single tailored quote covering all of them.
+          </p>
 
-        {categories.length > 1 && (
-          <div className="flex flex-wrap gap-2 mb-8">
-            {categories.map((c) => (
-              <button
-                key={c}
-                onClick={() => setActiveCat(c)}
-                className={`text-sm px-4 py-1.5 rounded-md border transition-colors ${
-                  activeCat === c
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-card text-muted-foreground border-border hover:border-accent hover:text-accent"
-                }`}
-              >
-                {c}
-              </button>
-            ))}
+          {categories.length > 1 && (
+            <div className="flex flex-wrap gap-2 mb-8">
+              {categories.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setActiveCat(c)}
+                  className={`text-sm px-4 py-1.5 rounded-md border transition-colors ${
+                    activeCat === c
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-card text-muted-foreground border-border hover:border-accent hover:text-accent"
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {loading ? (
+            <div className="text-center py-20 text-muted-foreground">Loading products...</div>
+          ) : filtered.length === 0 ? (
+            <div className="text-center py-20 border border-dashed border-border rounded-xl">
+              <Package className="mx-auto text-muted-foreground mb-3" size={32} />
+              <p className="text-muted-foreground mb-4">No products listed yet. Check back soon!</p>
+              <Link to="/contact" className="text-accent text-sm font-medium hover:underline">
+                Request a custom quote →
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pb-24">
+              {filtered.map((p) => (
+                <ProductCard key={p.id} p={p} />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+      <QuoteCartBar />
+    </>
+  );
+}
+
+function QuoteCartBar() {
+  const { items, remove, clear } = useQuoteCart();
+  const [open, setOpen] = useState(false);
+  if (items.length === 0) return null;
+
+  const message = formatQuoteMessage(items);
+
+  return (
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-[min(92vw,640px)]">
+      {open && (
+        <div className="bg-card border border-border rounded-xl shadow-xl p-4 mb-2 max-h-[60vh] overflow-auto">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-semibold text-primary text-sm">Your Quote List ({items.length})</h3>
+            <button onClick={clear} className="text-xs text-muted-foreground hover:text-destructive">Clear all</button>
           </div>
-        )}
-
-        {loading ? (
-          <div className="text-center py-20 text-muted-foreground">Loading products...</div>
-        ) : filtered.length === 0 ? (
-          <div className="text-center py-20 border border-dashed border-border rounded-xl">
-            <Package className="mx-auto text-muted-foreground mb-3" size={32} />
-            <p className="text-muted-foreground mb-4">No products listed yet. Check back soon!</p>
-            <Link to="/contact" className="text-accent text-sm font-medium hover:underline">
-              Request a custom quote →
+          <ul className="space-y-2 mb-4">
+            {items.map((i) => (
+              <li key={i.id} className="flex items-center justify-between gap-2 text-sm border-b border-border pb-2">
+                <div className="min-w-0">
+                  <div className="font-medium text-primary truncate">{i.name}</div>
+                  <div className="text-xs text-muted-foreground">{i.category}{i.price !== null ? ` · OMR ${Number(i.price).toFixed(2)}` : ""}</div>
+                </div>
+                <button onClick={() => remove(i.id)} className="text-muted-foreground hover:text-destructive p-1" aria-label="Remove">
+                  <X size={16} />
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <Link
+              to="/contact"
+              search={{ items: items.map((i) => i.name).join("|") } as never}
+              className="bg-accent2 hover:bg-accent2/90 text-accent2-foreground text-sm font-medium px-3 py-2 rounded-md text-center inline-flex items-center justify-center gap-1.5"
+            >
+              <FileText size={14} /> Get Quote
             </Link>
+            <a
+              href={whatsappLink(`Hi Genesys GT,\n\n${message}`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium px-3 py-2 rounded-md text-center inline-flex items-center justify-center gap-1.5"
+            >
+              <MessageCircle size={14} /> WhatsApp
+            </a>
+            <a
+              href={mailtoLink("Quote request — multiple products", message)}
+              className="bg-secondary hover:bg-secondary/80 text-primary text-sm font-medium px-3 py-2 rounded-md text-center inline-flex items-center justify-center gap-1.5 border border-border"
+            >
+              <Mail size={14} /> Email
+            </a>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filtered.map((p) => (
-              <ProductCard key={p.id} p={p} />
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+        </div>
+      )}
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="w-full bg-primary text-primary-foreground rounded-full shadow-lg px-5 py-3 flex items-center justify-between gap-3 hover:bg-primary/90 transition-colors"
+      >
+        <span className="flex items-center gap-2 text-sm font-medium">
+          <FileText size={16} className="text-accent" />
+          {items.length} item{items.length > 1 ? "s" : ""} in your quote list
+        </span>
+        <span className="text-xs text-accent font-medium">{open ? "Close" : "Review & Send"}</span>
+      </button>
+    </div>
   );
 }
 
