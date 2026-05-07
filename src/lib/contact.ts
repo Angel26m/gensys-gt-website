@@ -1,7 +1,8 @@
 export const COMPANY_EMAIL = "info@genesysgt.com";
-// TODO: customer to provide. Use international format e.g. 96812345678 (no + or spaces)
-export const COMPANY_WHATSAPP = "96800000000";
-export const COMPANY_PHONE = "+968 0000 0000";
+// International format, no + or spaces
+export const COMPANY_WHATSAPP = "96879868055";
+export const COMPANY_PHONE = "+968 7986 8055";
+export const COMPANY_LOCATION_URL = "https://maps.app.goo.gl/5WghirKBuCj5xyJKA";
 
 export function whatsappLink(message: string) {
   return `https://wa.me/${COMPANY_WHATSAPP}?text=${encodeURIComponent(message)}`;
