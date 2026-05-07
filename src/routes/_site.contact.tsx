@@ -183,7 +183,7 @@ function ContactPage() {
   );
 }
 
-function Field({ label, name, type = "text", required, placeholder }: { label: string; name: string; type?: string; required?: boolean; placeholder?: string }) {
+function Field({ label, name, type = "text", required, placeholder, defaultValue }: { label: string; name: string; type?: string; required?: boolean; placeholder?: string; defaultValue?: string }) {
   return (
     <div>
       <label className="block text-xs uppercase tracking-wider text-muted-foreground font-medium mb-1.5">{label}</label>
@@ -192,6 +192,7 @@ function Field({ label, name, type = "text", required, placeholder }: { label: s
         name={name}
         required={required}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         maxLength={255}
         className="w-full bg-background border border-input rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
       />
