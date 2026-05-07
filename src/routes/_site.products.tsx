@@ -5,7 +5,7 @@ import type { Database } from "@/integrations/supabase/types";
 import { Package, MessageCircle, Mail, Plus, Check, X, FileText } from "lucide-react";
 import { whatsappLink, mailtoLink } from "@/lib/contact";
 import { useQuoteCart, formatQuoteMessage } from "@/lib/quote-cart";
-import { Link } from "@tanstack/react-router";
+
 
 export const Route = createFileRoute("/_site/products")({
   component: ProductsPage,
