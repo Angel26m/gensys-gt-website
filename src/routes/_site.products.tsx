@@ -189,18 +189,32 @@ function ProductCard({ p }: { p: Product }) {
         )}
         {!p.in_stock && <div className="text-xs text-destructive mb-2">Out of stock</div>}
 
+        <button
+          onClick={() =>
+            inCart
+              ? remove(p.id)
+              : add({ id: p.id, name: p.name, price: p.price !== null ? Number(p.price) : null, category: p.category })
+          }
+          className={`w-full mb-2 flex items-center justify-center gap-1.5 text-sm font-medium px-3 py-2 rounded-md transition-colors border ${
+            inCart
+              ? "bg-accent/10 text-accent border-accent/40"
+              : "bg-accent2 hover:bg-accent2/90 text-accent2-foreground border-transparent"
+          }`}
+        >
+          {inCart ? <><Check size={14} /> Added to Quote</> : <><Plus size={14} /> Add to Quote</>}
+        </button>
         <div className="flex gap-2">
           <a
             href={whatsappLink(inquiry)}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-1.5 bg-accent2 hover:bg-accent2/90 text-accent2-foreground text-sm font-medium px-3 py-2 rounded-md transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 border border-border text-primary text-sm font-medium px-3 py-2 rounded-md transition-colors"
           >
             <MessageCircle size={14} /> WhatsApp
           </a>
           <a
             href={mailtoLink(`Quote: ${p.name}`, inquiry)}
-            className="flex items-center justify-center gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium px-3 py-2 rounded-md transition-colors"
+            className="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 border border-border text-primary text-sm font-medium px-3 py-2 rounded-md transition-colors"
             aria-label="Email"
           >
             <Mail size={14} />
