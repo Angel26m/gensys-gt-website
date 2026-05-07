@@ -3,8 +3,9 @@ import { useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone, X } from "lucide-react";
 import { COMPANY_EMAIL, COMPANY_LOCATION_URL, COMPANY_PHONE, COMPANY_WHATSAPP, mailtoLink, whatsappLink } from "@/lib/contact";
+import { useQuoteCart, formatQuoteMessage } from "@/lib/quote-cart";
 
 export const Route = createFileRoute("/_site/contact")({
   component: ContactPage,
