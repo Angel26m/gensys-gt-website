@@ -159,6 +159,8 @@ function QuoteCartBar() {
 
 function ProductCard({ p }: { p: Product }) {
   const inquiry = `Hi Genesys GT, I'm interested in: ${p.name}${p.price ? ` (OMR ${p.price})` : ""}. Please share more details.`;
+  const { add, remove, has } = useQuoteCart();
+  const inCart = has(p.id);
 
   return (
     <div className="bg-card border border-border rounded-xl overflow-hidden hover:shadow-lg hover:border-accent/40 transition-all">
