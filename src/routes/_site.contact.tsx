@@ -3,8 +3,9 @@ import { useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone, X } from "lucide-react";
 import { COMPANY_EMAIL, COMPANY_LOCATION_URL, COMPANY_PHONE, COMPANY_WHATSAPP, mailtoLink, whatsappLink } from "@/lib/contact";
+import { useQuoteCart, formatQuoteMessage } from "@/lib/quote-cart";
 
 export const Route = createFileRoute("/_site/contact")({
   component: ContactPage,
@@ -28,6 +29,9 @@ const QuoteSchema = z.object({
 function ContactPage() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const { items, remove, clear } = useQuoteCart();
+  const cartList = items.map((i) => i.name).join(", ");
+  const cartMessage = formatQuoteMessage(items);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -54,6 +58,7 @@ function ContactPage() {
     setDone(true);
     toast.success("Quote request received — we'll be in touch shortly!");
     (e.target as HTMLFormElement).reset();
+    if (items.length > 0) clear();
   }
 
   return (
@@ -115,14 +120,42 @@ function ContactPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          {items.length > 0 && (
+            <div className="bg-accent/5 border border-accent/30 rounded-lg p-4 mb-5">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-sm font-semibold text-primary">Your selected products ({items.length})</div>
+                <button type="button" onClick={clear} className="text-xs text-muted-foreground hover:text-destructive">Clear</button>
+              </div>
+              <ul className="space-y-1.5">
+                {items.map((i) => (
+                  <li key={i.id} className="flex items-center justify-between text-sm">
+                    <span className="text-primary">
+                      {i.name}
+                      {i.price !== null && <span className="text-muted-foreground"> — OMR {Number(i.price).toFixed(2)}</span>}
+                    </span>
+                    <button type="button" onClick={() => remove(i.id)} className="text-muted-foreground hover:text-destructive p-1" aria-label="Remove">
+                      <X size={14} />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-muted-foreground mt-2">These will be included in your quote request below.</p>
+            </div>
+          )}
+
+          <form key={items.length} onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Field label="Name *" name="name" required />
               <Field label="Email *" name="email" type="email" required />
               <Field label="Phone" name="phone" />
               <Field label="Company" name="company" />
             </div>
-            <Field label="Product / Service of interest" name="product_interest" placeholder="e.g. CCTV system, POS, attendance machine" />
+            <Field
+              label="Product / Service of interest"
+              name="product_interest"
+              placeholder="e.g. CCTV system, POS, attendance machine"
+              defaultValue={cartList || undefined}
+            />
             <div>
               <label className="block text-xs uppercase tracking-wider text-muted-foreground font-medium mb-1.5">Message *</label>
               <textarea
@@ -130,6 +163,7 @@ function ContactPage() {
                 required
                 rows={5}
                 maxLength={2000}
+                defaultValue={cartMessage || undefined}
                 className="w-full bg-background border border-input rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 placeholder="Tell us about your project, location and timeline..."
               />
@@ -149,7 +183,7 @@ function ContactPage() {
   );
 }
 
-function Field({ label, name, type = "text", required, placeholder }: { label: string; name: string; type?: string; required?: boolean; placeholder?: string }) {
+function Field({ label, name, type = "text", required, placeholder, defaultValue }: { label: string; name: string; type?: string; required?: boolean; placeholder?: string; defaultValue?: string }) {
   return (
     <div>
       <label className="block text-xs uppercase tracking-wider text-muted-foreground font-medium mb-1.5">{label}</label>
@@ -158,6 +192,7 @@ function Field({ label, name, type = "text", required, placeholder }: { label: s
         name={name}
         required={required}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         maxLength={255}
         className="w-full bg-background border border-input rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
       />

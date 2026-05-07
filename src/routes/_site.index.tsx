@@ -1,12 +1,63 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ShieldCheck, Camera, Fingerprint, Cpu, Bell, Code2, ArrowRight } from "lucide-react";
+import {
+  ShieldCheck, Camera, Fingerprint, Cpu, Bell, Code2, ArrowRight,
+  Package, Building2, Hotel, GraduationCap, Hospital, Store, Factory, Landmark,
+  Award, Clock, Headphones, BadgeCheck, Wrench, Users,
+} from "lucide-react";
+
+const SITE_URL = "https://genesysgt.com";
 
 export const Route = createFileRoute("/_site/")({
   component: HomePage,
   head: () => ({
     meta: [
-      { title: "Genesys GT | IT, CCTV & Security Solutions in Oman" },
-      { name: "description", content: "From CCTV and gate barriers to POS and IT infrastructure — Genesys GT is Oman's one-stop technology partner." },
+      { title: "Genesys GT | CCTV, IT, POS & Security Solutions in Oman" },
+      {
+        name: "description",
+        content:
+          "Genesys Global Technologies — Oman's trusted partner for CCTV, gate barriers, biometric access, POS, IT infrastructure & custom software. Get a free quote.",
+      },
+      {
+        name: "keywords",
+        content:
+          "CCTV Oman, security systems Muscat, gate barriers Oman, biometric attendance, POS system Oman, IT infrastructure, networking, software development Oman, Genesys GT",
+      },
+      { name: "author", content: "Genesys Global Technologies" },
+      { name: "robots", content: "index, follow" },
+      { property: "og:type", content: "website" },
+      { property: "og:title", content: "Genesys GT | CCTV, IT, POS & Security Solutions in Oman" },
+      {
+        property: "og:description",
+        content:
+          "Complete IT, CCTV, POS and security solutions for businesses across Oman. Browse weekly products and request a free quote.",
+      },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:site_name", content: "Genesys GT" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Genesys GT | IT, CCTV & Security Solutions in Oman" },
+      {
+        name: "twitter:description",
+        content: "From CCTV and gate barriers to POS and IT infrastructure — Oman's one-stop technology partner.",
+      },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "Genesys Global Technologies",
+          image: `${SITE_URL}/og.jpg`,
+          url: SITE_URL,
+          telephone: "+968 7986 8055",
+          email: "info@genesysgt.com",
+          address: { "@type": "PostalAddress", addressCountry: "OM" },
+          areaServed: "OM",
+          description:
+            "CCTV, gate barriers, biometric access, POS, IT infrastructure and custom software solutions in Oman.",
+        }),
+      },
     ],
   }),
 });
@@ -18,6 +69,35 @@ const SERVICES = [
   { icon: Bell, title: "VDP & Intercom", desc: "Video door phones, intercom & visitor management." },
   { icon: Code2, title: "Web & Software Development", desc: "Custom websites, apps, POS & ERP solutions." },
   { icon: Cpu, title: "IT Infrastructure & Supply", desc: "Laptops, servers, networking & structured cabling." },
+];
+
+const PRODUCT_CATEGORIES = [
+  { title: "CCTV Cameras & NVRs", desc: "HD/4K IP cameras, recorders & storage." },
+  { title: "Biometric Devices", desc: "Fingerprint and face recognition terminals." },
+  { title: "Boom Barriers", desc: "Automatic barriers for parking & gates." },
+  { title: "POS Systems", desc: "Touch terminals, printers, scanners & cash drawers." },
+  { title: "Networking Hardware", desc: "Switches, routers, access points & cabling." },
+  { title: "Computers & Laptops", desc: "Business desktops, laptops & accessories." },
+];
+
+const INDUSTRIES = [
+  { icon: Building2, title: "Corporate Offices" },
+  { icon: Store, title: "Retail & Supermarkets" },
+  { icon: Hotel, title: "Hotels & Hospitality" },
+  { icon: Hospital, title: "Healthcare & Clinics" },
+  { icon: GraduationCap, title: "Education" },
+  { icon: Factory, title: "Industrial & Warehouses" },
+  { icon: Landmark, title: "Government & Banking" },
+  { icon: Building2, title: "Real Estate & Residential" },
+];
+
+const WHY_US = [
+  { icon: Award, title: "10+ Years in Oman", desc: "Proven track record across hundreds of installations." },
+  { icon: BadgeCheck, title: "Certified Brands", desc: "Authorised partner for leading global manufacturers." },
+  { icon: Wrench, title: "End-to-End Service", desc: "Supply, installation, configuration & training in one place." },
+  { icon: Headphones, title: "24/7 Support", desc: "Local Oman-based engineers, fast response times." },
+  { icon: Clock, title: "On-Time Delivery", desc: "Projects delivered on schedule, on budget." },
+  { icon: Users, title: "Trusted by 200+", desc: "From SMEs to enterprise & government clients." },
 ];
 
 function HomePage() {
@@ -58,7 +138,7 @@ function HomePage() {
       </section>
 
       {/* Services */}
-      <section className="bg-secondary px-6 py-16 md:py-20">
+      <section id="services" className="bg-secondary px-6 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-[11px] tracking-[0.22em] uppercase text-accent font-medium mb-2">What We Do</div>
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-3">End-to-End IT & Security Services</h2>
@@ -80,6 +160,74 @@ function HomePage() {
             <Link to="/services" className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all">
               View all services <ArrowRight size={16} />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Products */}
+      <section id="products" className="px-6 py-16 md:py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-[11px] tracking-[0.22em] uppercase text-accent font-medium mb-2">Our Products</div>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-3">Quality Products, Refreshed Weekly</h2>
+          <p className="text-muted-foreground max-w-xl mb-10">
+            Browse our curated catalog of security and IT products. Add multiple items to your quote list and get a single tailored offer.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {PRODUCT_CATEGORIES.map(({ title, desc }) => (
+              <div key={title} className="bg-card border border-border rounded-xl p-6 hover:-translate-y-1 transition-all hover:shadow-lg">
+                <div className="w-11 h-11 rounded-lg bg-accent2/10 grid place-items-center mb-4 text-accent2">
+                  <Package size={20} />
+                </div>
+                <h3 className="font-semibold text-primary mb-1">{title}</h3>
+                <p className="text-sm text-muted-foreground">{desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10">
+            <Link to="/products" className="inline-flex items-center gap-2 text-accent font-medium hover:gap-3 transition-all">
+              Browse this week's products <ArrowRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Industries Served */}
+      <section id="industries" className="bg-secondary px-6 py-16 md:py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-[11px] tracking-[0.22em] uppercase text-accent font-medium mb-2">Industries Served</div>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-3">Trusted Across Oman's Key Sectors</h2>
+          <p className="text-muted-foreground max-w-xl mb-10">
+            We deliver tailored IT and security solutions for businesses of every size and industry.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {INDUSTRIES.map(({ icon: Icon, title }) => (
+              <div key={title} className="bg-card border border-border rounded-xl p-5 text-center hover:border-accent/40 hover:shadow-md transition-all">
+                <Icon className="mx-auto mb-2 text-accent" size={24} />
+                <div className="text-sm font-medium text-primary">{title}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section id="why-us" className="px-6 py-16 md:py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-[11px] tracking-[0.22em] uppercase text-accent font-medium mb-2">Why Choose Us</div>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-3">Why Businesses Pick Genesys GT</h2>
+          <p className="text-muted-foreground max-w-xl mb-10">
+            We combine global brands, certified expertise and local support to deliver solutions you can rely on.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {WHY_US.map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="bg-card border border-border rounded-xl p-6 hover:-translate-y-1 transition-all hover:shadow-lg">
+                <div className="w-11 h-11 rounded-lg bg-accent/10 grid place-items-center mb-4 text-accent">
+                  <Icon size={20} />
+                </div>
+                <h3 className="font-semibold text-primary mb-1">{title}</h3>
+                <p className="text-sm text-muted-foreground">{desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
