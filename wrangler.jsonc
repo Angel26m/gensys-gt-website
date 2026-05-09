@@ -4,4 +4,8 @@
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
+  "vars": {
+    "VITE_SUPABASE_URL": "https://tcxenfbqcnztxmohknvo.supabase.co",
+    "VITE_SUPABASE_PUBLISHABLE_KEY": "sb_publishable_lTzT-HqkDl_B9KxNq6UHSA_iiTPI07L"
+  }
 }
