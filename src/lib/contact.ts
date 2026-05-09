@@ -11,5 +11,5 @@ export function whatsappLink(message?: string) {
 }
 
 export function mailtoLink(subject: string, body: string) {
-  return `mailto:${COMPANY_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return `https://mail.google.com/mail/?view=cm&to=${COMPANY_EMAIL}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
