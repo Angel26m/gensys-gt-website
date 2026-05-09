@@ -50,8 +50,8 @@ export const Route = createFileRoute("/_site/")({
           name: "Genesys Global Technologies",
           image: `${SITE_URL}/og.jpg`,
           url: SITE_URL,
-          telephone: "+968 7986 8055",
-          email: "info@genesysgt.com",
+          telephone: "+968 97140846",
+          email: "Sales@genesysgt.com",
           address: { "@type": "PostalAddress", addressCountry: "OM" },
           areaServed: "OM",
           description:

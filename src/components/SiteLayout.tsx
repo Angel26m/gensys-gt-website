@@ -19,7 +19,7 @@ export function SiteLayout() {
     <div className="min-h-screen flex flex-col">
       {/* Top bar */}
       <div className="bg-accent2 text-accent2-foreground text-xs font-medium text-center px-4 py-2">
-        Trusted IT, CCTV & Security Partner in Oman · info@genesysgt.com
+        Trusted IT, CCTV & Security Partner in Oman · Sales@genesysgt.com
       </div>
 
       {/* Nav */}
@@ -96,8 +96,8 @@ export function SiteLayout() {
         <div className="max-w-6xl mx-auto">
           <strong className="text-white/85">Genesys Global Technologies</strong> — IT Solutions, CCTV & Security Systems in Oman
           <div className="flex gap-4 justify-center mt-3 flex-wrap text-white/60">
-            <a href="tel:+96879868055" className="hover:text-accent">+968 7986 8055</a>
-            <a href="mailto:info@genesysgt.com" className="hover:text-accent">info@genesysgt.com</a>
+            <a href="tel:+968 97140846" className="hover:text-accent">+968 97140846</a>
+            <a href="mailto:Sales@genesysgt.com" className="hover:text-accent">Sales@genesysgt.com</a>
             <a href="https://maps.app.goo.gl/5WghirKBuCj5xyJKA" target="_blank" rel="noopener noreferrer" className="hover:text-accent">Find us on Maps</a>
           </div>
           <div className="flex gap-4 justify-center mt-3 flex-wrap">
